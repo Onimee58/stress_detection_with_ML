@@ -1,11 +1,12 @@
 # Stress Detection
 ```
-Implementation of the paper "Smart Wristband-Based Stress Detection Framework for Older Adults With Cortisol as Stress Biomarker"
+Implementation of the paper:
+R. K. Nath and H. Thapliyal, "Smart Wristband-Based Stress Detection Framework for Older Adults With Cortisol as Stress Biomarker," in IEEE Transactions on Consumer Electronics, vol. 67, no. 1, pp. 30-39, Feb. 2021, doi: 10.1109/TCE.2021.3057806.
 ```
 
 <p align="center"><img src="data/workflow_all.png" width="90%" alt="" style="background-color:blue"/></p>
 <em align="center"> Workflow </em>
-<p align="center"><img src="data/results.png" width="90%" alt="" style="background-color:white"/></p>
+<p align="center"><img src="data/result.png" width="90%" alt="" style="background-color:white"/></p>
 <em align="center"> Results </em>
 
 ## Experimental Steps
