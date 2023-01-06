@@ -74,10 +74,10 @@ for i in range(0, len(all_id)):
     test_id.append(all_id.pop(i-1))
     train_id = all_id
     
-    # print('train_id')
-    # print(train_id)
-    # print('test_id')
-    # print(test_id)
+    print('train_id')
+    print(train_id)
+    print('test_id')
+    print(test_id)
     
     feature_set = all_features[others+selected_feature]
     feature_set_train=feature_set.loc[feature_set['ID'].isin(train_id)]
