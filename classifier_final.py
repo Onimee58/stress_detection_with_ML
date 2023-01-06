@@ -74,10 +74,10 @@ for i in range(0, len(all_id)):
     test_id.append(all_id.pop(i-1))
     train_id = all_id
     
-    print('train_id')
-    print(train_id)
-    print('test_id')
-    print(test_id)
+    # print('train_id')
+    # print(train_id)
+    # print('test_id')
+    # print(test_id)
     
     feature_set = all_features[others+selected_feature]
     feature_set_train=feature_set.loc[feature_set['ID'].isin(train_id)]
@@ -129,8 +129,8 @@ for i in range(0, len(all_id)):
         metric = sklearn.metrics.classification_report(label_2_test,tests[j])
         all_accuracy.append(sklearn.metrics.accuracy_score(label_2_test,tests[j]))
         all_precision_recall_fscore_support.append(sklearn.metrics.precision_recall_fscore_support(label_2_test,tests[j]))
-        # print('---------------' + models[j] + '---------------' )
-        # print(metric)
+        print('---------------' + models[j] + '---------------' )
+        print(metric)
     
     
     
@@ -156,7 +156,15 @@ avg_macro_svm_f1 = np.mean(np.array(macro_svm_f1))
 avg_micro_svm_f1 = np.mean(np.array(micro_svm_f1))
 avg_acc = np.mean(np.array(all_accuracy))
 
-
+print('avg_macro_rf_f1', avg_macro_rf_f1)
+print('avg_micro_rf_f1', avg_micro_rf_f1)
+print('avg_macro_knn_f1', avg_macro_knn_f1)
+print('avg_micro_knn_f1', avg_micro_knn_f1)
+print('avg_macro_lr_f1', avg_macro_lr_f1)
+print('avg_micro_lr_f1', avg_micro_lr_f1)
+print('avg_macro_svm_f1', avg_macro_svm_f1)
+print('avg_micro_svm_f1', avg_micro_svm_f1)
+print('avg_acc', avg_acc)
 
 
 
