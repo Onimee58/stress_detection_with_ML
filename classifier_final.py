@@ -6,7 +6,7 @@ Created on Sun Dec 25 18:35:59 2022
 """
 
 from final_functions import *
-
+from tqdm import tqdm
 
 
 eda_feature_list=['MEAN_PEAK_GSR','MEDIAN_PEAK_GSR','STD_PEAK_GSR','RMS_PEAK_GSR','MAX_PEAK_GSR','MIN_PEAK_GSR','MEAN_PEAK_WIDTH',
@@ -65,18 +65,20 @@ micro_svm_f1 = []
 all_id = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
                 31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50]
 
-for i in range(0, len(all_id)):
+for i in tqdm(range(0, len(all_id))):
     
     all_id = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
                 31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50]
     
+    print('\n\n')
+    print('--------------- Trial ' + str(i+1) + ' ---------------' )
     test_id = [all_id.pop(i)]
-    test_id.append(all_id.pop(i-1))
+    # test_id.append(all_id.pop(i-1))
     train_id = all_id
     
-    print('train_id')
+    print('train_id: ', end = '')
     print(train_id)
-    print('test_id')
+    print('test_id: ', end = '')
     print(test_id)
     
     feature_set = all_features[others+selected_feature]
