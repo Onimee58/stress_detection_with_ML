@@ -5,15 +5,19 @@ Created on Mon Jan  9 19:40:33 2023
 @author: monim
 """
 
-from final_functions_new import *
+from final_functions_newV1 import *
 from tqdm import tqdm
 
 
-eda_feature_list=['MEAN_PEAK_GSR','MEDIAN_PEAK_GSR','STD_PEAK_GSR','RMS_PEAK_GSR','MAX_PEAK_GSR','MIN_PEAK_GSR','MEAN_PEAK_WIDTH',
-                  'MEDIAN_PEAK_WIDTH','STD_PEAK_WIDTH','RMS_PEAK_WIDTH','MAX_PEAK_WIDTH','MIN_PEAK_WIDTH','MEAN_PEAK_PROM','MEDIAN_PEAK_PROM',
-                  'STD_PEAK_PROM','RMS_PEAK_PROM','MAX_PEAK_PROM','MIN_PEAK_PROM']
-bvp_feature_list=['MEAN_PPG','STD_PPG','RMS_PPG','RANGE_PPG','MEAN_PPG_WIDTH','MEDIAN_PPG_WIDTH','STD_PPG_WIDTH','RMS_PPG_WIDTH','MAX_PPG_WIDTH',
-                  'MIN_PPG_WIDTH','MEAN_PPG_PROM','MEDIAN_PPG_PROM','STD_PPG_PROM','RMS_PPG_PROM','MAX_PPG_PROM','MIN_PPG_PROM','HR', 'AVG_RESP_FREQUENCY']
+eda_feature_list=['MEAN_PEAK_GSR','MEDIAN_PEAK_GSR','STD_PEAK_GSR','RMS_PEAK_GSR','MAX_PEAK_GSR','MIN_PEAK_GSR',
+                  'MEAN_PEAK_WIDTH','MEDIAN_PEAK_WIDTH','STD_PEAK_WIDTH','RMS_PEAK_WIDTH','MAX_PEAK_WIDTH',
+                  'MIN_PEAK_WIDTH','MEAN_PEAK_PROM','MEDIAN_PEAK_PROM','STD_PEAK_PROM','RMS_PEAK_PROM',
+                  'MAX_PEAK_PROM','MIN_PEAK_PROM']
+
+bvp_feature_list=['MEAN_PPG','STD_PPG','RMS_PPG','RANGE_PPG','MEAN_PPG_WIDTH','MEDIAN_PPG_WIDTH','STD_PPG_WIDTH',
+                  'RMS_PPG_WIDTH','MAX_PPG_WIDTH','MIN_PPG_WIDTH','MEAN_PPG_PROM','MEDIAN_PPG_PROM','STD_PPG_PROM',
+                  'RMS_PPG_PROM','MAX_PPG_PROM','MIN_PPG_PROM','HR', 'AVG_RESP_FREQUENCY','MAX_RESP_FREQUENCY']
+
 hrv_feature_list=['HRV','RANGE_HRV','HRV_STD','HRV_RMS']
 
 st_feature_list=['ST_MEAN','ST_SD','ST_MEDIAN','ST_RMS','ST_RANGE','ST_SLOPE','ST_INTERCEPT']
@@ -48,7 +52,7 @@ others = ['ID', 'Label_2', 'Phase', 'Value']
 
 k=29
 
-df = pd.read_csv('dataset/all_features_new.csv',index_col=None, header=0)
+df = pd.read_csv('dataset/all_features_newV1.csv',index_col=None, header=0)
 all_features = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
 all_accuracy = []
@@ -107,7 +111,8 @@ for i in tqdm(range(0, len(all_id))):
     X_test_new=scaler_feature.transform(X_test)   
     
     
-    model_1 = RandomForestClassifier(n_estimators=100,criterion='gini',max_depth=None, random_state=3)
+    model_1 = RandomForestClassifier(n_estimators=100,criterion='entropy',max_features=None,
+                                     max_depth=None, random_state=3, n_jobs=-1)
     model_2 = KNeighborsClassifier(n_neighbors=18)
     model_3 = LogisticRegression(penalty='l2',C=10,random_state=3, solver='lbfgs',multi_class='auto',max_iter =5000)
     model_4 = svm.SVC(random_state=3,C=10,kernel='poly',gamma='auto')

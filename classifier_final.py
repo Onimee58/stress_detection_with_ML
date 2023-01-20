@@ -20,8 +20,8 @@ st_feature_list=['ST_MEAN','ST_SD','ST_MEDIAN','ST_RMS','ST_RANGE','ST_SLOPE','S
 
 ibi_feature_list=['MEAN_IBI','SD_IBI','MEDIAN_IBI','MAX_IBI','MIN_IBI','RMS_IBI']
 
-eda_new=['MIN_PEAK_GSR','STD_PEAK_GSR','RMS_PEAK_GSR','MEAN_PEAK_GSR','MEDIAN_PEAK_GSR','MAX_PEAK_PROM','STD_PEAK_PROM','MIN_PEAK_PROM',
-         'MEAN_PEAK_WIDTH','RMS_PEAK_WIDTH', 'MEDIAN_PEAK_WIDTH','STD_PEAK_WIDTH','MAX_PEAK_WIDTH']
+# eda_new=['MIN_PEAK_GSR','STD_PEAK_GSR','RMS_PEAK_GSR','MEAN_PEAK_GSR','MEDIAN_PEAK_GSR','MAX_PEAK_PROM','STD_PEAK_PROM','MIN_PEAK_PROM',
+#          'MEAN_PEAK_WIDTH','RMS_PEAK_WIDTH', 'MEDIAN_PEAK_WIDTH','STD_PEAK_WIDTH','MAX_PEAK_WIDTH']
 
 eda_only = eda_feature_list
 eda_and_bvp = eda_feature_list + bvp_feature_list
@@ -91,8 +91,10 @@ for i in tqdm(range(0, len(all_id))):
     value_train=feature_set_train['Value']
     value_train=normalize(value_train)
     X_train=feature_set_train.drop(['ID','Label_2','Value',label],axis=1)
+    print(X_train.shape)
     list_features=feature_select(X_train,label_2_train)
     X_train=X_train[list_features]
+    print(X_train.shape)
     
     label_2_test=feature_set_test['Label_2']
     id_test=feature_set_test['ID']
@@ -107,7 +109,7 @@ for i in tqdm(range(0, len(all_id))):
     X_test_new=scaler_feature.transform(X_test)   
     
     
-    model_1 = RandomForestClassifier(n_estimators=100,criterion='gini',max_depth=None, random_state=3)
+    model_1 = RandomForestClassifier(n_estimators=100,criterion='gini',max_depth=None, random_state=3, n_jobs=-1)
     model_2 = KNeighborsClassifier(n_neighbors=18)
     model_3 = LogisticRegression(penalty='l2',C=10,random_state=3, solver='lbfgs',multi_class='auto',max_iter =5000)
     model_4 = svm.SVC(random_state=3,C=10,kernel='poly',gamma='auto')
@@ -167,7 +169,7 @@ print('avg_micro_lr_f1', avg_micro_lr_f1)
 print('avg_macro_svm_f1', avg_macro_svm_f1)
 print('avg_micro_svm_f1', avg_micro_svm_f1)
 print('avg_acc', avg_acc)
-
+print('\n')
 
 
 

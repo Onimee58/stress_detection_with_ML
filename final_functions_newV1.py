@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jan  9 19:35:36 2023
+Created on Mon Jan  9 19:32:46 2023
 
 @author: monim
 """
@@ -50,12 +50,15 @@ warnings.filterwarnings('ignore')
 # constants
 sample_rate_gsr=4
 sample_rate_ppg=64
+sample_rate_bvp=64
 sample_rate_hr=1
 sample_rate_acc=32
 sample_rate_st=4
 frequency_gsr=1
 frequency_ppg=10
 window_size=120
+window_length=30
+time_to_output=5
 
 # functions
 def find_range(array_data):
@@ -100,6 +103,33 @@ def sine_normalize(dataframe):
         value_sine=math.sin(i)
         sined_values.append(value_sine)
     return sined_values
+
+def get_estimated_frequencies(bvp_signal_segment, window_length,time_to_output,sample_rate):
+    estimated_frequencies=[] # Contains the list of predicted frequencies
+    start=0
+    bvp_signal_segment = bvp_signal_segment.flatten()
+    end=int(window_length*sample_rate_bvp)
+    overlap=int(time_to_output*sample_rate_bvp)
+    while(end<len(bvp_signal_segment)):
+        sample_frequency, power_spectrum=signal.periodogram(bvp_signal_segment[start:end], sample_rate_bvp)
+        # You can modify other parameters such as window or nfft to get better precision in the estimation of power spectrum using the periodohgram method.
+        # You can also explore other power spectral method. And ofcourse, you can look into existing literature for other methods. 
+        index_max,=np.where(power_spectrum==np.max(power_spectrum))
+        estimated_frequencies.append(sample_frequency[index_max])
+        start=start+overlap
+        end=end+overlap
+    return estimated_frequencies
+
+def butterworth_new(raw_signal,n,desired_cutoff,sample_rate,btype):
+    if(btype=='high' or btype=='low'):
+        critical_frequency=(2*desired_cutoff)/sample_rate
+        B, A = signal.butter(n, critical_frequency, btype=btype, output='ba')
+    elif(btype=='bandpass'):
+        critical_frequency_1=(2*desired_cutoff[0])/sample_rate
+        critical_frequency_2=(2*desired_cutoff[1])/sample_rate
+        B, A = signal.butter(n, [critical_frequency_1,critical_frequency_2], btype=btype, output='ba')
+    filtered_signal = signal.filtfilt(B,A, raw_signal, axis=0)
+    return filtered_signal
 
 def select_k_best(X_train,Y_train,k):
     list_index=[]
@@ -257,6 +287,12 @@ def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,l
     variable_sample_gsr=normalize(dataframe_gsr)
     variable_sample_ppg=normalize(dataframe_ppg)
     variable_sample_gsr=butterworth(variable_sample_gsr,5,cuttoff_gsr)
+    #sample_rate_bvp=calculate_sample_rate(dataframe_ppg) # for new added feature
+    bvp_filtered=butterworth_new(variable_sample_ppg,3,[0.2,0.8],sample_rate_bvp,btype='bandpass') # for new added feature
+    estimated_frequencies=get_estimated_frequencies(bvp_filtered,window_length,time_to_output,sample_rate_bvp) # for new added feature
+    estimated_respiratory_rate=list(np.asarray(estimated_frequencies).flatten()*60) # for new added feature
+    max_estimates_rr = np.max(estimated_respiratory_rate)
+    avg_estimated_rr = np.mean(estimated_respiratory_rate)
     variable_sample_ppg=butterworth(variable_sample_ppg,5,cuttoff_ppg)
     variable_sample_gsr=variable_sample_gsr.reshape(len(variable_sample_gsr),)
     variable_sample_ppg=variable_sample_ppg.reshape(len(variable_sample_ppg),)
@@ -525,6 +561,8 @@ def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,l
             'RMS_PPG_PROM':rms_ppg_prom,
             'MAX_PPG_PROM':max_ppg_prom,
             'MIN_PPG_PROM':min_ppg_prom,
+            'AVG_RESP_FREQUENCY':avg_estimated_rr, # for new added feature
+            'MAX_RESP_FREQUENCY': max_estimates_rr,
             # # ST
             'ST_MEAN':st_mean,
             'ST_SD':st_sd,
@@ -574,6 +612,12 @@ def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,lab
     variable_sample_gsr=normalize(dataframe_gsr)
     variable_sample_ppg=normalize(dataframe_ppg)
     variable_sample_gsr=butterworth(variable_sample_gsr,5,cuttoff_gsr)
+    #sample_rate_bvp=calculate_sample_rate(dataframe_ppg) # for new added feature
+    bvp_filtered=butterworth_new(variable_sample_ppg,3,[0.2,0.8],sample_rate_bvp,btype='bandpass') # for new added feature
+    estimated_frequencies=get_estimated_frequencies(bvp_filtered,window_length,time_to_output,sample_rate_bvp) # for new added feature
+    estimated_respiratory_rate=list(np.asarray(estimated_frequencies).flatten()*60) # for new added feature
+    max_estimates_rr = np.max(estimated_respiratory_rate)
+    avg_estimated_rr = np.mean(estimated_respiratory_rate)
     variable_sample_ppg=butterworth(variable_sample_ppg,5,cuttoff_ppg)
     variable_sample_gsr=variable_sample_gsr.reshape(len(variable_sample_gsr),)
     variable_sample_ppg=variable_sample_ppg.reshape(len(variable_sample_ppg),)
@@ -840,6 +884,8 @@ def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,lab
             'RMS_PPG_PROM':rms_ppg_prom,
             'MAX_PPG_PROM':max_ppg_prom,
             'MIN_PPG_PROM':min_ppg_prom,
+            'AVG_RESP_FREQUENCY':avg_estimated_rr, # for new added feature
+            'MAX_RESP_FREQUENCY': max_estimates_rr,
             # # ST
             'ST_MEAN':st_mean,
             'ST_SD':st_sd,
@@ -893,6 +939,12 @@ def get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labe
     variable_sample_gsr=normalize(dataframe_gsr)
     variable_sample_ppg=normalize(dataframe_ppg)
     variable_sample_gsr=butterworth(variable_sample_gsr,5,cuttoff_gsr)
+    #sample_rate_bvp=calculate_sample_rate(dataframe_ppg) # for new added feature
+    bvp_filtered=butterworth_new(variable_sample_ppg,3,[0.2,0.8],sample_rate_bvp,btype='bandpass') # for new added feature
+    estimated_frequencies=get_estimated_frequencies(bvp_filtered,window_length,time_to_output,sample_rate_bvp) # for new added feature
+    estimated_respiratory_rate=list(np.asarray(estimated_frequencies).flatten()*60) # for new added feature
+    max_estimates_rr = np.max(estimated_respiratory_rate)
+    avg_estimated_rr = np.mean(estimated_respiratory_rate)
     variable_sample_ppg=butterworth(variable_sample_ppg,5,cuttoff_ppg)
     variable_sample_gsr=variable_sample_gsr.reshape(len(variable_sample_gsr),)
     variable_sample_ppg=variable_sample_ppg.reshape(len(variable_sample_ppg),)
@@ -1158,6 +1210,8 @@ def get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labe
             'RMS_PPG_PROM':rms_ppg_prom,
             'MAX_PPG_PROM':max_ppg_prom,
             'MIN_PPG_PROM':min_ppg_prom,
+            'AVG_RESP_FREQUENCY':avg_estimated_rr, # for new added feature
+            'MAX_RESP_FREQUENCY': max_estimates_rr,
             # # ST
             'ST_MEAN':st_mean,
             'ST_SD':st_sd,
@@ -1188,4 +1242,13 @@ def get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labe
         
 if __name__ == '__main__':
     print('do not run this file, its is a list of functions')
+    
+    
+
+
+    
+    
+    
+    
+    
     

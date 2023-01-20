@@ -221,7 +221,7 @@ def feature_select(X_train,Y_train):
     column_names=X_train.columns
     for column in column_names:
         score,p_value=stats.kendalltau(X_train[column],Y_train,method='auto')
-        if(p_value<0.05):
+        if(p_value<0.03): #if(p_value<0.05):
             feature_names.append(column)
     return feature_names
 
@@ -291,6 +291,7 @@ def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,l
     bvp_filtered=butterworth_new(variable_sample_ppg,3,[0.2,0.8],sample_rate_bvp,btype='bandpass') # for new added feature
     estimated_frequencies=get_estimated_frequencies(bvp_filtered,window_length,time_to_output,sample_rate_bvp) # for new added feature
     estimated_respiratory_rate=list(np.asarray(estimated_frequencies).flatten()*60) # for new added feature
+    avg_estimated_rr = np.mean(estimated_respiratory_rate)
     variable_sample_ppg=butterworth(variable_sample_ppg,5,cuttoff_ppg)
     variable_sample_gsr=variable_sample_gsr.reshape(len(variable_sample_gsr),)
     variable_sample_ppg=variable_sample_ppg.reshape(len(variable_sample_ppg),)
@@ -559,6 +560,7 @@ def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,l
             'RMS_PPG_PROM':rms_ppg_prom,
             'MAX_PPG_PROM':max_ppg_prom,
             'MIN_PPG_PROM':min_ppg_prom,
+            'AVG_RESP_FREQUENCY':avg_estimated_rr, # for new added feature
             # # ST
             'ST_MEAN':st_mean,
             'ST_SD':st_sd,
@@ -584,7 +586,6 @@ def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,l
     df['Label_2']=labelb
     df['Value']=labelb_v
     df['Phase']='b'
-    df['RESP_FREQUENCY']=estimated_respiratory_rate # for new added feature
     return df
     
     
@@ -613,6 +614,7 @@ def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,lab
     bvp_filtered=butterworth_new(variable_sample_ppg,3,[0.2,0.8],sample_rate_bvp,btype='bandpass') # for new added feature
     estimated_frequencies=get_estimated_frequencies(bvp_filtered,window_length,time_to_output,sample_rate_bvp) # for new added feature
     estimated_respiratory_rate=list(np.asarray(estimated_frequencies).flatten()*60) # for new added feature
+    avg_estimated_rr = np.mean(estimated_respiratory_rate)
     variable_sample_ppg=butterworth(variable_sample_ppg,5,cuttoff_ppg)
     variable_sample_gsr=variable_sample_gsr.reshape(len(variable_sample_gsr),)
     variable_sample_ppg=variable_sample_ppg.reshape(len(variable_sample_ppg),)
@@ -879,6 +881,7 @@ def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,lab
             'RMS_PPG_PROM':rms_ppg_prom,
             'MAX_PPG_PROM':max_ppg_prom,
             'MIN_PPG_PROM':min_ppg_prom,
+            'AVG_RESP_FREQUENCY':avg_estimated_rr, # for new added feature
             # # ST
             'ST_MEAN':st_mean,
             'ST_SD':st_sd,
@@ -904,7 +907,6 @@ def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,lab
     df['Label_2']=labels
     df['Value']=labels_v
     df['Phase']='s'
-    df['RESP_FREQUENCY']=estimated_respiratory_rate
     return df
 
 
@@ -937,6 +939,7 @@ def get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labe
     bvp_filtered=butterworth_new(variable_sample_ppg,3,[0.2,0.8],sample_rate_bvp,btype='bandpass') # for new added feature
     estimated_frequencies=get_estimated_frequencies(bvp_filtered,window_length,time_to_output,sample_rate_bvp) # for new added feature
     estimated_respiratory_rate=list(np.asarray(estimated_frequencies).flatten()*60) # for new added feature
+    avg_estimated_rr = np.mean(estimated_respiratory_rate)
     variable_sample_ppg=butterworth(variable_sample_ppg,5,cuttoff_ppg)
     variable_sample_gsr=variable_sample_gsr.reshape(len(variable_sample_gsr),)
     variable_sample_ppg=variable_sample_ppg.reshape(len(variable_sample_ppg),)
@@ -1202,6 +1205,7 @@ def get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labe
             'RMS_PPG_PROM':rms_ppg_prom,
             'MAX_PPG_PROM':max_ppg_prom,
             'MIN_PPG_PROM':min_ppg_prom,
+            'AVG_RESP_FREQUENCY':avg_estimated_rr, # for new added feature
             # # ST
             'ST_MEAN':st_mean,
             'ST_SD':st_sd,
@@ -1227,7 +1231,6 @@ def get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labe
     df['Label_2']=labelr
     df['Value']=labelr_v
     df['Phase']='r'
-    df['RESP_FREQUENCY']=estimated_respiratory_rate
     return df
     
         
