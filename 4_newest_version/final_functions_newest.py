@@ -268,6 +268,7 @@ def get_slope_intercept(s_temp):
 
 def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labelb,labelb_v):
     #extracting data
+    base_1, base_2 = (2,5) #!!!!
     dataframe_gsr=pd.read_csv(gsr_filename)
     dataframe_ppg=pd.read_csv(ppg_filename)
     dataframe_st=pd.read_csv(st_filename)
@@ -275,13 +276,13 @@ def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,l
     ibi=get_segment_ibi(dataframe_ibi,0.05,0.15)
     ibi_n=normalize(ibi['ibi'])
     ibi['ibi']=ibi_n
-    dataframe_st=get_segment(dataframe_st,sample_rate_st,5,8)
+    dataframe_st=get_segment(dataframe_st,sample_rate_st,base_1,base_2)
     s_temp=np.asarray(dataframe_st)
     s_temp=normalize(s_temp)
     s_temp=s_temp.reshape(len(s_temp),)
-    dataframe_gsr=get_segment(dataframe_gsr,sample_rate_gsr,5,8)
+    dataframe_gsr=get_segment(dataframe_gsr,sample_rate_gsr,base_1,base_2)
     dataframe_gsr=dataframe_gsr-(get_scl(dataframe_gsr))
-    dataframe_ppg=get_segment(dataframe_ppg,sample_rate_ppg,5,8) 
+    dataframe_ppg=get_segment(dataframe_ppg,sample_rate_ppg,base_1,base_2) 
     cuttoff_gsr=(2*frequency_gsr)/sample_rate_gsr
     cuttoff_ppg=(2*frequency_ppg)/sample_rate_ppg
     variable_sample_gsr=normalize(dataframe_gsr)
@@ -593,6 +594,7 @@ def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,l
     
 def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labels,labels_v):
     #extracting data
+    stress_1,stress_2 = (25, 35) #!!!!
     dataframe_gsr=pd.read_csv(gsr_filename)
     dataframe_ppg=pd.read_csv(ppg_filename)
     dataframe_st=pd.read_csv(st_filename)
@@ -600,13 +602,13 @@ def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,lab
     ibi=get_segment_ibi(dataframe_ibi,0.2,0.6)
     ibi_n=normalize(ibi['ibi'])
     ibi['ibi']=ibi_n
-    dataframe_st=get_segment(dataframe_st,sample_rate_st,20,35)
+    dataframe_st=get_segment(dataframe_st,sample_rate_st,stress_1,stress_2)
     s_temp=np.asarray(dataframe_st)
     s_temp=normalize(s_temp)
     s_temp=s_temp.reshape(len(s_temp),)
-    dataframe_gsr=get_segment(dataframe_gsr,sample_rate_gsr,20,35)
+    dataframe_gsr=get_segment(dataframe_gsr,sample_rate_gsr,stress_1,stress_2)
     dataframe_gsr=dataframe_gsr-(get_scl(dataframe_gsr))
-    dataframe_ppg=get_segment(dataframe_ppg,sample_rate_ppg,20,35) 
+    dataframe_ppg=get_segment(dataframe_ppg,sample_rate_ppg,stress_1,stress_2) 
     cuttoff_gsr=(2*frequency_gsr)/sample_rate_gsr
     cuttoff_ppg=(2*frequency_ppg)/sample_rate_ppg
     variable_sample_gsr=normalize(dataframe_gsr)
@@ -916,12 +918,13 @@ def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,lab
 
 def get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labelr,labelr_v):
     #extracting data
+    relax_1 = 45 #!!!!
     dataframe_gsr=pd.read_csv(gsr_filename)
     dataframe_ppg=pd.read_csv(ppg_filename)
     total_time=len(dataframe_gsr)/(sample_rate_gsr*60)
     end_time=int(total_time-5)   
     dataframe_st=pd.read_csv(st_filename)
-    dataframe_st=get_segment(dataframe_st,sample_rate_st,45,end_time)
+    dataframe_st=get_segment(dataframe_st,sample_rate_st,relax_1,end_time)
     s_temp=np.asarray(dataframe_st)
     s_temp=normalize(s_temp)
     s_temp=s_temp.reshape(len(s_temp),)
@@ -931,9 +934,9 @@ def get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labe
     ibi=get_segment_ibi(ibi,0.6,1)
     ibi_n=normalize(ibi['ibi'])
     ibi['ibi']=ibi_n
-    dataframe_gsr=get_segment(dataframe_gsr,sample_rate_gsr,45,end_time)
+    dataframe_gsr=get_segment(dataframe_gsr,sample_rate_gsr,relax_1,end_time)
     dataframe_gsr=dataframe_gsr-(get_scl(dataframe_gsr))
-    dataframe_ppg=get_segment(dataframe_ppg,sample_rate_ppg,45,end_time) 
+    dataframe_ppg=get_segment(dataframe_ppg,sample_rate_ppg,relax_1,end_time) 
     cuttoff_gsr=(2*frequency_gsr)/sample_rate_gsr
     cuttoff_ppg=(2*frequency_ppg)/sample_rate_ppg
     variable_sample_gsr=normalize(dataframe_gsr)
