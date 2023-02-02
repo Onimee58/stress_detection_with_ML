@@ -6,6 +6,7 @@ Created on Mon Jan  9 19:38:41 2023
 """
 
 from final_functions_newest import *
+from get_cortisol_gt_newest import good_subject_id
 import warnings
 warnings.filterwarnings('ignore')
 from tqdm import tqdm
@@ -22,8 +23,11 @@ sample_rate_bvp=64
 window_length=30
 time_to_output=5
     
-subject_id=[10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
-            31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50] 
+# subject_id=[10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
+            # 31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50] 
+            
+subject_id = good_subject_id
+
 #label2   
 st0=[]
 st1=[1,1,1]
@@ -210,7 +214,7 @@ for i in tqdm(subject_id):
             ppg_filename='dataset/E4_Data/ST0'+str(i)+'/BVP.csv'
             ibi_filename='dataset/E4_Data/ST0'+str(i)+'/IBI.csv'
             st_filename='dataset/E4_Data/ST0'+str(i)+'/TEMP.csv'
-            output_file='dataset/E4_Data/ST0'+str(i)+'/processed_newV1.csv'
+            output_file='dataset/E4_Data/ST0'+str(i)+'/processed_newest.csv'
     #        label_list='st'+str(i)
         except:
             print('missing ST0'+str(i))

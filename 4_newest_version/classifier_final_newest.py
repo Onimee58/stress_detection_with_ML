@@ -6,6 +6,7 @@ Created on Mon Jan  9 19:40:33 2023
 """
 
 from final_functions_newest import *
+from get_cortisol_gt_newest import good_subject_id
 from tqdm import tqdm
 
 
@@ -52,7 +53,7 @@ others = ['ID', 'Label_2', 'Phase', 'Value']
 
 k=29
 
-df = pd.read_csv('dataset/all_features_newV1.csv',index_col=None, header=0)
+df = pd.read_csv('dataset/all_features_newest.csv',index_col=None, header=0)
 all_features = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
 all_accuracy = []
@@ -66,13 +67,17 @@ micro_lr_f1 = []
 macro_svm_f1 = []
 micro_svm_f1 = []
 
-all_id = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
-                31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50]
+# all_id = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
+                # 31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50]
+    
+all_id = [p for p in good_subject_id]
 
 for i in tqdm(range(0, len(all_id))):
     
-    all_id = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
-                31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50]
+    # all_id = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
+    #             31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50]
+    
+    all_id = [p for p in good_subject_id]
     
     print('\n\n')
     print('--------------- Trial ' + str(i+1) + ' ---------------' )

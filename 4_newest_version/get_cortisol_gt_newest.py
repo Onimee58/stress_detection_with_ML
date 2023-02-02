@@ -25,8 +25,47 @@ for s in range(0,total_data_len*5,5):
 
 cort_reading = sub_v[subject_idx]
 
+#%%
 plt.rcParams["figure.figsize"] = (20,20)
 plt.rcParams.update({'font.size': 22})
 for i in range(len(cort_reading)):
     plt.scatter(time_slots, cort_reading[i])
+    plt.plot(time_slots, cort_reading[i])
+plt.show()
+
+
+#%%
+gcount = 0
+bcount = 0
+good_data_idx = []
+bad_data_idx = []
+for i in range(len(cort_reading)):
+    if cort_reading[i,2] > np.mean(cort_reading[i,0:2]):
+        good_data_idx.append(i)
+        gcount+=1
+    else:
+        bad_data_idx.append(i)
+        bcount+=1
+        
+        
+sub_id = np.array(subject_id)
+good_subject_id = sub_id[good_data_idx]
+good_cort_reading = cort_reading[good_data_idx]
+bad_subject_id = sub_id[bad_data_idx]
+bad_cort_reading = cort_reading[bad_data_idx]
+
+plt.clf()
+plt.rcParams["figure.figsize"] = (20,20)
+plt.rcParams.update({'font.size': 22})
+for i in range(len(good_cort_reading)):
+    plt.scatter(time_slots, good_cort_reading[i])
+    plt.plot(time_slots, good_cort_reading[i])
+plt.show()
+
+plt.clf()
+plt.rcParams["figure.figsize"] = (20,20)
+plt.rcParams.update({'font.size': 22})
+for i in range(len(bad_cort_reading)):
+    plt.scatter(time_slots, bad_cort_reading[i])
+    plt.plot(time_slots, bad_cort_reading[i])
 plt.show()

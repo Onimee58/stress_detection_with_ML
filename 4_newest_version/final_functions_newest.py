@@ -221,7 +221,7 @@ def feature_select(X_train,Y_train):
     column_names=X_train.columns
     for column in column_names:
         score,p_value=stats.kendalltau(X_train[column],Y_train,method='auto')
-        if(p_value<0.03): #if(p_value<0.05):
+        if(p_value<0.05): #if(p_value<0.05):
             feature_names.append(column)
     return feature_names
 
@@ -268,7 +268,7 @@ def get_slope_intercept(s_temp):
 
 def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labelb,labelb_v):
     #extracting data
-    base_1, base_2 = (2,5) #!!!!
+    base_1, base_2 = (5,8) #!!!!
     dataframe_gsr=pd.read_csv(gsr_filename)
     dataframe_ppg=pd.read_csv(ppg_filename)
     dataframe_st=pd.read_csv(st_filename)
@@ -594,7 +594,7 @@ def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,l
     
 def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labels,labels_v):
     #extracting data
-    stress_1,stress_2 = (25, 35) #!!!!
+    stress_1,stress_2 = (25, 38) #!!!!
     dataframe_gsr=pd.read_csv(gsr_filename)
     dataframe_ppg=pd.read_csv(ppg_filename)
     dataframe_st=pd.read_csv(st_filename)
