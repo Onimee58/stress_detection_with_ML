@@ -5,8 +5,8 @@ Created on Mon Jan  9 19:38:41 2023
 @author: monim
 """
 
-from final_functions_newest import *
-from get_cortisol_gt_newest import good_subject_id
+from final_functions_context import *
+from get_cortisol_gt_context import good_subject_id
 import warnings
 warnings.filterwarnings('ignore')
 from tqdm import tqdm

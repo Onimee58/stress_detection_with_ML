@@ -5,8 +5,8 @@ Created on Mon Jan  9 19:37:36 2023
 @author: monim
 """
 
-from final_functions_newest import *
-from get_cortisol_gt_newest import good_subject_id
+from final_functions_context import *
+from get_cortisol_gt_context import good_subject_id
 import warnings
 import pandas as pd
 from tqdm import tqdm
