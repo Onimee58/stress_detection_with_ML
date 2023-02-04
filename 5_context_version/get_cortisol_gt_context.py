@@ -16,7 +16,7 @@ subject_id=[10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
 subject_idx = [sub-1 for sub in subject_id]
 total_data_len = 50
 time_slots = ['T1', 'T2', 'T3', 'T4', 'T5']
-
+classes = ['not_stressed', 'low_stress', 'stress']
 sub_v = np.zeros([total_data_len,5])
 i = 0
 for s in range(0,total_data_len*5,5):
@@ -24,6 +24,27 @@ for s in range(0,total_data_len*5,5):
     i+=1
 
 cort_reading = sub_v[subject_idx]
+labels = np.ones(list(cort_reading.shape))
+baseline_idx = []
+stressed_idx = []
+for i in range(len(cort_reading)):
+    baseline_idx.append(np.argmin(cort_reading[i]))
+    stressed_idx.append(np.argmax(cort_reading[i]))
+    labels[i,baseline_idx[i]] = 0
+    labels[i,stressed_idx[i]] = 2
+
+all_labels = np.array(labels, dtype = int)
+#%%
+
+all_subject_context = np.ones(list(labels.shape))*np.array([[0],
+                                                            [1],
+                                                            [1],
+                                                            [2],
+                                                            [1]]).T
+
+
+
+
 
 #%%
 '''
@@ -52,9 +73,14 @@ for i in range(len(cort_reading)):
 sub_id = np.array(subject_id)
 good_subject_id = sub_id[good_data_idx]
 good_cort_reading = cort_reading[good_data_idx]
+good_labels = all_labels[good_data_idx]
+good_subject_context = all_subject_context[good_data_idx]
 bad_subject_id = sub_id[bad_data_idx]
 bad_cort_reading = cort_reading[bad_data_idx]
+bad_subject_context = all_subject_context[bad_data_idx]
+bad_labels = all_labels[bad_data_idx]
 
+#%%
 '''
 plt.clf()
 plt.rcParams["figure.figsize"] = (20,20)
@@ -72,3 +98,5 @@ for i in range(len(bad_cort_reading)):
     plt.plot(time_slots, bad_cort_reading[i])
 plt.show()
 '''
+#%%
+
