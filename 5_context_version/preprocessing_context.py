@@ -28,112 +28,7 @@ time_to_output=5
             
 subject_id = good_subject_id
 
-#label2   
-st0=[]
-st1=[1,1,1]
-st2=[]
-st3=[]
-st4=[1,1,1]
-st5=[1,1,1]
-st6=[1,1,1]
-st7=[1,1,1]
-st8=[]
-st9=[]
-st10=[1,1,1]
-st11=[0,1,1]
-st12=[1,1,1]
-st13=[1,1,1]
-st14=[1,1,1]
-st15=[1,1,1]
-st16=[1,0,0]
-st17=[1,1,1]
-st18=[1,1,1]
-st19=[0,0,0]
-st20=[1,0,0]
-st21=[1,1,0]
-st22=[1,1,1]
-st23=[1,1,1]
-st24=[]
-st25=[1,1,1]
-st26=[1,0,0]
-st27=[0,1,1]
-st28=[0,0,0]
-st29=[1,1,1]
-st30=[0,0,0]
-st31=[0,1,0]
-st32=[1,1,1]
-st33=[0,0,0]
-st34=[0,0,0]
-st35=[1,1,1]
-st36=[1,0,0]
-st37=[0,0,0]
-st38=[1,1,1]
-st39=[1,1,0]
-st40=[1,1,1]
-st41=[1,0,0]
-st42=[1,1,0]
-st43=[0,0,0]
-st44=[1,1,1]
-st45=[1,1,0]
-st46=[1,1,0]
-st47=[0,0,1]
-st48=[1,1,1]
-st49=[1,1,1]
-st50=[0,0,0]
 
-# label3
-#st0=[]
-#st1=[2,2,1]
-#st2=[]
-#st3=[]
-#st4=[2,2,1]
-##st5=[1,1,1]
-##st6=[1,1,1]
-##st7=[1,1,1]
-##st8=[]
-##st9=[]
-#st10=[1,1,1]
-#st11=[0,1,1]
-#st12=[1,2,1]
-#st13=[1,1,1]
-#st14=[1,1,2]
-#st15=[2,1,1]
-#st16=[1,0,0]
-#st17=[1,1,1]
-#st18=[1,1,1]
-#st19=[0,0,0]
-#st20=[2,0,0]
-#st21=[2,1,0]
-#st22=[1,2,2]
-#st23=[2,2,1]
-#st24=[]
-#st25=[1,2,1]
-#st26=[2,0,0]
-#st27=[0,1,1]
-#st28=[0,0,0]
-#st29=[2,1,1]
-#st30=[0,0,0]
-#st31=[0,2,0]
-#st32=[1,2,2]
-#st33=[0,0,0]
-#st34=[0,0,0]
-#st35=[1,1,1]
-#st36=[1,0,0]
-#st37=[0,0,0]
-#st38=[2,2,1]
-##st39=[1,1,1]
-#st40=[2,1,2]
-#st41=[1,0,0]
-#st42=[1,1,0]
-#st43=[0,1,0]
-#st44=[2,2,1]
-#st45=[2,2,0]
-#st46=[1,1,1]
-#st47=[0,0,1]
-#st48=[2,1,1]
-#st49=[1,1,1]
-#st50=[0,0,0]
-# values
 st0_v=[]
 st1_v=[50,69,47]
 st2_v=[]
@@ -187,57 +82,44 @@ st49_v=[21,24,19]
 st50_v=[-176,-222,-182]
 
 
-subject_label=[st0,st1,st2,st3,st4,st5,st6,st7,st8,st9,st10,st11,st12,st13,st14,st15,st16,st17,
-               st18,st19,st20,st21,st22,st23,st24,st25,st26,st27,st28,st29,st30,st31,st32,st33,
-               st34,st35,st36,st37,st38,st39,st40,st41,st42,st43,st44,st45,st46,st47,st48,st49,st50]
+# subject_label=[st0,st1,st2,st3,st4,st5,st6,st7,st8,st9,st10,st11,st12,st13,st14,st15,st16,st17,
+#                st18,st19,st20,st21,st22,st23,st24,st25,st26,st27,st28,st29,st30,st31,st32,st33,
+#                st34,st35,st36,st37,st38,st39,st40,st41,st42,st43,st44,st45,st46,st47,st48,st49,st50]
 
-subject_label_v=[st0_v,st1_v,st2_v,st3_v,st4_v,st5_v,st6_v,st7_v,st8_v,st9_v,st10_v,st11_v,st12_v,st13_v,
-                 st14_v,st15_v,st16_v,st17_v,st18_v,st19_v,st20_v,st21_v,st22_v,st23_v,st24_v,st25_v,st26_v,
-                 st27_v,st28_v,st29_v,st30_v,st31_v,st32_v,st33_v,st34_v,st35_v,st36_v,st37_v,st38_v,st39_v,
-                 st40_v,st41_v,st42_v,st43_v,st44_v,st45_v,st46_v,st47_v,st48_v,st49_v,st50_v]
+# subject_label_v=[st0_v,st1_v,st2_v,st3_v,st4_v,st5_v,st6_v,st7_v,st8_v,st9_v,st10_v,st11_v,st12_v,st13_v,
+#                  st14_v,st15_v,st16_v,st17_v,st18_v,st19_v,st20_v,st21_v,st22_v,st23_v,st24_v,st25_v,st26_v,
+#                  st27_v,st28_v,st29_v,st30_v,st31_v,st32_v,st33_v,st34_v,st35_v,st36_v,st37_v,st38_v,st39_v,
+#                  st40_v,st41_v,st42_v,st43_v,st44_v,st45_v,st46_v,st47_v,st48_v,st49_v,st50_v]
 
 
 for i in tqdm(subject_id):
     ID=i
-
-    # if(i<10):
-    #     try:
-    #         gsr_filename='dataset/E4_Data/ST00'+str(i)+'/EDA.csv'
-    #         ppg_filename='dataset/E4_Data/ST00'+str(i)+'/BVP.csv'
-    #         output_file='dataset/E4_Data/ST00'+str(i)+'/processed.csv'
-    # #        label_list='st'+str(i)
-    #     except:
-    #         print('missing ST00'+str(i))
     if(i>=10):
         try:
             gsr_filename='dataset/E4_Data/ST0'+str(i)+'/EDA.csv'
             ppg_filename='dataset/E4_Data/ST0'+str(i)+'/BVP.csv'
             ibi_filename='dataset/E4_Data/ST0'+str(i)+'/IBI.csv'
             st_filename='dataset/E4_Data/ST0'+str(i)+'/TEMP.csv'
-            output_file='dataset/E4_Data/ST0'+str(i)+'/processed_newest.csv'
+            output_file='dataset/E4_Data/ST0'+str(i)+'/processed_context.csv'
     #        label_list='st'+str(i)
         except:
             print('missing ST0'+str(i))
 
-    labelb=subject_label[i][0]
-    labels=subject_label[i][1]
-    labelr=subject_label[i][2]
+    # label_ns=subject_label[i][0]
+    # label_s=subject_label[i][2]
+    # label_ls=subject_label[i][1]
     
-    labelb_v=subject_label_v[i][0]
-    labels_v=subject_label_v[i][1]
-    labelr_v=subject_label_v[i][2]  
-    
-    df_baseline=get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labelb,labelb_v)
-    df_baseline=df_baseline.fillna(np.mean(df_baseline))
-    df_baseline=df_baseline.fillna(0)
-    df_stress=get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labels,labels_v)
+    df_no_stress=get_no_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID)
+    df_no_stress=df_no_stress.fillna(np.mean(df_no_stress))
+    df_no_stress=df_no_stress.fillna(0)
+    df_stress=get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID)
     df_stress=df_stress.fillna(np.mean(df_stress))
     df_stress=df_stress.fillna(0)
-    df_relax=get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labelr,labelr_v)
-    df_relax=df_relax.fillna(np.mean(df_relax))
-    df_relax=df_relax.fillna(0)
+    df_low_stress=get_low_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID)
+    df_low_stress=df_low_stress.fillna(np.mean(df_low_stress))
+    df_low_stress=df_low_stress.fillna(0)
     
-    df_all = pd.concat([df_baseline,df_stress,df_relax], axis=0, join='outer', ignore_index=False)
-    # df_all = pd.concat([df_baseline,df_stress], axis=0, join='outer', ignore_index=False)
+    df_all = pd.concat([df_no_stress,df_stress,df_low_stress], axis=0, join='outer', ignore_index=False)
+    # df_all = pd.concat([df_no_stress,df_stress], axis=0, join='outer', ignore_index=False)
     df_all.to_csv(output_file)
     # print('ST0'+str(i)+ 'done')

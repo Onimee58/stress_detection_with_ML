@@ -266,7 +266,7 @@ def get_slope_intercept(s_temp):
         return stats.theilslopes(s_temp, np.arange(len(s_temp)), 0.90) 
 
 
-def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labelb,labelb_v):
+def get_no_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID):
     #extracting data
     base_1, base_2 = (5,8) #!!!!
     dataframe_gsr=pd.read_csv(gsr_filename)
@@ -586,13 +586,11 @@ def get_baseline_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,l
             'LB_SLOPE_IBI':lb_slope_ibi,
             'UB_SLOPE_IBI':ub_slope_ibi})
     df['ID']=ID
-    df['Label_2']=labelb
-    df['Value']=labelb_v
-    df['Phase']='b'
+    df['Phase']='no_stress'
     return df
     
     
-def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labels,labels_v):
+def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID):
     #extracting data
     stress_1,stress_2 = (25, 38) #!!!!
     dataframe_gsr=pd.read_csv(gsr_filename)
@@ -910,13 +908,11 @@ def get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,lab
             'LB_SLOPE_IBI':lb_slope_ibi,
             'UB_SLOPE_IBI':ub_slope_ibi})
     df['ID']=ID
-    df['Label_2']=labels
-    df['Value']=labels_v
-    df['Phase']='s'
+    df['Phase']='stress'
     return df
 
 
-def get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labelr,labelr_v):
+def get_low_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID):
     #extracting data
     relax_1 = 45 #!!!!
     dataframe_gsr=pd.read_csv(gsr_filename)
@@ -1237,9 +1233,7 @@ def get_relax_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID,labe
             'LB_SLOPE_IBI':lb_slope_ibi,
             'UB_SLOPE_IBI':ub_slope_ibi})
     df['ID']=ID
-    df['Label_2']=labelr
-    df['Value']=labelr_v
-    df['Phase']='r'
+    df['Phase']='low_stress'
     return df
     
         

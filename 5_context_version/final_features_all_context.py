@@ -19,9 +19,9 @@ subject_id = good_subject_id
 
 list_df = []
 for i in tqdm(subject_id):
-    file_name='dataset/E4_Data/ST0'+str(i)+'/processed_newest.csv'
+    file_name='dataset/E4_Data/ST0'+str(i)+'/processed_context.csv'
     df = pd.read_csv(file_name)
     list_df.append(df)
 
 all_features = pd.concat(list_df)
-all_features.to_csv('dataset/all_features_newest.csv')
+all_features.to_csv('dataset/all_features_context.csv')

@@ -36,15 +36,23 @@ for i in range(len(cort_reading)):
 all_labels = np.array(labels, dtype = int)
 #%%
 
-all_subject_context = np.ones(list(labels.shape))*np.array([[0],
+all_subject_context_1 = np.ones(list(labels.shape))*np.array([[0],
                                                             [1],
                                                             [1],
                                                             [2],
                                                             [1]]).T
 
+all_subject_context_2 = np.ones(list(labels.shape))*np.array([[0],
+                                                            [1],
+                                                            [1],
+                                                            [2],
+                                                            [0]]).T
 
-
-
+all_subject_context_3 = np.ones(list(labels.shape))*np.array([[1],
+                                                            [1],
+                                                            [1],
+                                                            [2],
+                                                            [0]]).T
 
 #%%
 '''
@@ -74,10 +82,14 @@ sub_id = np.array(subject_id)
 good_subject_id = sub_id[good_data_idx]
 good_cort_reading = cort_reading[good_data_idx]
 good_labels = all_labels[good_data_idx]
-good_subject_context = all_subject_context[good_data_idx]
+good_subject_context_1 = all_subject_context_1[good_data_idx]
+good_subject_context_2 = all_subject_context_2[good_data_idx]
+good_subject_context_3 = all_subject_context_3[good_data_idx]
 bad_subject_id = sub_id[bad_data_idx]
 bad_cort_reading = cort_reading[bad_data_idx]
-bad_subject_context = all_subject_context[bad_data_idx]
+bad_subject_context_1 = all_subject_context_1[bad_data_idx]
+bad_subject_context_2 = all_subject_context_2[bad_data_idx]
+bad_subject_context_3 = all_subject_context_3[bad_data_idx]
 bad_labels = all_labels[bad_data_idx]
 
 #%%
