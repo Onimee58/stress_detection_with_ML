@@ -59,6 +59,8 @@ frequency_ppg=10
 window_size=120
 window_length=30
 time_to_output=5
+sample_rate_label = 64
+
 
 # functions
 def find_range(array_data):

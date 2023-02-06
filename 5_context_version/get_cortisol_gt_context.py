@@ -111,4 +111,7 @@ for i in range(len(bad_cort_reading)):
 plt.show()
 '''
 #%%
-
+sample_labels = np.ones([sample_rate_label*60*60, len(subject_id)])
+for i in range(len(sample_labels)):
+    break
+# df_labels =   
