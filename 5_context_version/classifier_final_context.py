@@ -6,7 +6,9 @@ Created on Mon Jan  9 19:40:33 2023
 """
 
 from final_functions_context import *
+from get_cortisol_gt_context import subject_id, all_labels, time_slots, sub_id
 from get_cortisol_gt_context import good_subject_id
+
 from tqdm import tqdm
 
 
@@ -47,13 +49,13 @@ elif feature_name == '2':
 else:
     selected_feature = eda_and_bvp_ibi_and_st
 
-others = ['ID', 'Label_2', 'Phase', 'Value']
+others = ['ID', 'Labels']
 
 # print(len(list_features_original))
 
 k=29
 
-df = pd.read_csv('dataset/all_features_newest.csv',index_col=None, header=0)
+df = pd.read_csv('dataset/all_features_context.csv',index_col=None, header=0)
 all_features = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
 all_accuracy = []
@@ -70,14 +72,14 @@ micro_svm_f1 = []
 # all_id = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
                 # 31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50]
     
-all_id = [p for p in good_subject_id]
+all_id = [p for p in subject_id]
 
 for i in tqdm(range(0, len(all_id))):
     
     # all_id = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
     #             31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50]
     
-    all_id = [p for p in good_subject_id]
+    all_id = [p for p in subject_id]
     
     print('\n\n')
     print('--------------- Trial ' + str(i+1) + ' ---------------' )
@@ -94,19 +96,15 @@ for i in tqdm(range(0, len(all_id))):
     feature_set_train=feature_set.loc[feature_set['ID'].isin(train_id)]
     feature_set_test=feature_set.loc[feature_set['ID'].isin(test_id)]
 
-    label='Phase'
     
-    label_2_train=feature_set_train['Label_2']
-    value_train=feature_set_train['Value']
-    value_train=normalize(value_train)
-    X_train=feature_set_train.drop(['ID','Label_2','Value',label],axis=1)
+    label_2_train=feature_set_train['Labels']
+    X_train=feature_set_train.drop(['ID','Labels'],axis=1)
     list_features=feature_select(X_train,label_2_train)
     X_train=X_train[list_features]
     
-    label_2_test=feature_set_test['Label_2']
+    label_2_test=feature_set_test['Labels']
     id_test=feature_set_test['ID']
-    phase_test=feature_set_test[label]
-    X_test=feature_set_test.drop(['ID','Label_2','Value',label],axis=1)
+    X_test=feature_set_test.drop(['ID','Labels'],axis=1)
     X_test=X_test[list_features]
     
     values=X_train.values

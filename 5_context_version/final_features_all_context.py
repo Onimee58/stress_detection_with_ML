@@ -6,7 +6,7 @@ Created on Mon Jan  9 19:37:36 2023
 """
 
 from final_functions_context import *
-from get_cortisol_gt_context import subject_id
+from get_cortisol_gt_context import subject_id, all_labels, time_slots, sub_id
 import warnings
 import pandas as pd
 from tqdm import tqdm

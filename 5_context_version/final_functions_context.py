@@ -41,7 +41,7 @@ from sklearn.ensemble import RandomForestClassifier
 from scipy.fftpack import fft
 import warnings
 warnings.filterwarnings('ignore')
-from get_cortisol_gt_context import ground_truth
+from get_cortisol_gt_context import subject_id, all_labels, time_slots, sub_id
 
 
 
@@ -587,6 +587,21 @@ def get_all_feature(time_1, time_2, gsr_filename,ppg_filename,ibi_filename,st_fi
             'LB_SLOPE_IBI':lb_slope_ibi,
             'UB_SLOPE_IBI':ub_slope_ibi})
     df['ID']=ID
+    
+    sample_labels = np.ones([sample_rate_label*df.shape[0], len(subject_id)])
+    
+    for p in range(len(all_labels)):
+        q = 0
+        for r in range(0, len(sample_labels), int(len(sample_labels)/len(time_slots))):
+            sample_labels[r:r+int(len(sample_labels)/len(time_slots)), p] = sample_labels[r:r+int(len(sample_labels)/len(time_slots)),p]*all_labels[p,q]
+            q+=1
+            if q>4:
+                break
+    df_labels = pd.DataFrame(sample_labels, index = None, columns = sub_id)
+    dataframe_labels=get_segment(df_labels,sample_rate_label,time_1,time_2)
+    lbl = np.array(dataframe_labels[r])
+    df['Labels'] = lbl
+    
     # df['Phase']='stress'
     # df['Labels'] = dataframe_labels
     return df

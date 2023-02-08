@@ -6,7 +6,7 @@ Created on Mon Jan  9 19:38:41 2023
 """
 
 from final_functions_context import *
-from get_cortisol_gt_context import subject_id, ground_truth
+from get_cortisol_gt_context import subject_id, all_labels, time_slots, sub_id
 import warnings
 warnings.filterwarnings('ignore')
 from tqdm import tqdm
@@ -30,8 +30,7 @@ sample_rate_label = 1
             
 #subject_id = good_subject_id
 
-dataframe_labels = ground_truth()
-
+#%%
 for i in tqdm(subject_id):
     ID=i
     if(i>=10):
@@ -48,14 +47,11 @@ for i in tqdm(subject_id):
     # stress_1, stress_2 = (5,8)
     # no_stress_1, no_stress_2 = (25,38)
     # relax_1, relax_2 = (45, 50)
-    time_1, time_2 = (5,70)
+    time_1, time_2 = (0,61)
 
-
+#%%
     
     df_all=get_all_feature(time_1,time_2,gsr_filename,ppg_filename,ibi_filename,st_filename,ID)
-    dataframe_labels=get_segment(dataframe_labels,sample_rate_label,time_1,time_2)
-    lbl = np.array(dataframe_labels[i])
-    df_all['Labels'] = lbl
     df_all=df_all.fillna(np.mean(df_all))
     df_all=df_all.fillna(0)
     
