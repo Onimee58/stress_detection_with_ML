@@ -6,7 +6,7 @@ Created on Mon Jan  9 19:38:41 2023
 """
 
 from final_functions_context import *
-from get_cortisol_gt_context import good_subject_id
+from get_cortisol_gt_context import subject_id, ground_truth
 import warnings
 warnings.filterwarnings('ignore')
 from tqdm import tqdm
@@ -22,75 +22,15 @@ window_size=120
 sample_rate_bvp=64
 window_length=30
 time_to_output=5
-    
+sample_rate_label = 1
+
+
 # subject_id=[10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
             # 31,32,33,34,35,36,37,38,40,41,42,43,44,45,46,47,48,49,50] 
             
-subject_id = good_subject_id
+#subject_id = good_subject_id
 
-
-st0_v=[]
-st1_v=[50,69,47]
-st2_v=[]
-st3_v=[]
-st4_v=[55,52,35]
-st5_v=[31,54,24]
-st6_v=[51,30,14]
-st7_v=[30,9,30]
-st8_v=[]
-st9_v=[]
-st10_v=[41,22,16]
-st11_v=[-31,18,22]
-st12_v=[27,71,32]
-st13_v=[30,35,31]
-st14_v=[3,27,51]
-st15_v=[50,7,36]
-st16_v=[46,-6,-4]
-st17_v=[11,17,17]
-st18_v=[38,25,36]
-st19_v=[-343,381,-496]
-st20_v=[52,-38,-42]
-st21_v=[178,33,-38]
-st22_v=[44,96,59]
-st23_v=[64,105,24]
-st24_v=[]
-st25_v=[41,55,19]
-st26_v=[244,-9,-53]
-st27_v=[-40,33,5]
-st28_v=[-109,-223,-189]
-st29_v=[57,25,9]
-st30_v=[-89,-154,-224]
-st31_v=[-76,61,-88]
-st32_v=[40,123,101]
-st33_v=[-31,-120,-76]
-st34_v=[-39,-83,-104]
-st35_v=[27,38,24]
-st36_v=[19,-32,-120]
-st37_v=[-41,-69,-82]
-st38_v=[119,61,18]
-st39_v=[22,50,-64]
-st40_v=[61,30,117]
-st41_v=[7,-90,-110]
-st42_v=[36,38,-22]
-st43_v=[-22,-1,-29]
-st44_v=[189,87,17]
-st45_v=[96,305,-16]
-st46_v=[25,16,-1]
-st47_v=[-8,-27,14]
-st48_v=[50,47,41]
-st49_v=[21,24,19]
-st50_v=[-176,-222,-182]
-
-
-# subject_label=[st0,st1,st2,st3,st4,st5,st6,st7,st8,st9,st10,st11,st12,st13,st14,st15,st16,st17,
-#                st18,st19,st20,st21,st22,st23,st24,st25,st26,st27,st28,st29,st30,st31,st32,st33,
-#                st34,st35,st36,st37,st38,st39,st40,st41,st42,st43,st44,st45,st46,st47,st48,st49,st50]
-
-# subject_label_v=[st0_v,st1_v,st2_v,st3_v,st4_v,st5_v,st6_v,st7_v,st8_v,st9_v,st10_v,st11_v,st12_v,st13_v,
-#                  st14_v,st15_v,st16_v,st17_v,st18_v,st19_v,st20_v,st21_v,st22_v,st23_v,st24_v,st25_v,st26_v,
-#                  st27_v,st28_v,st29_v,st30_v,st31_v,st32_v,st33_v,st34_v,st35_v,st36_v,st37_v,st38_v,st39_v,
-#                  st40_v,st41_v,st42_v,st43_v,st44_v,st45_v,st46_v,st47_v,st48_v,st49_v,st50_v]
-
+dataframe_labels = ground_truth()
 
 for i in tqdm(subject_id):
     ID=i
@@ -104,22 +44,22 @@ for i in tqdm(subject_id):
     #        label_list='st'+str(i)
         except:
             print('missing ST0'+str(i))
+        
+    # stress_1, stress_2 = (5,8)
+    # no_stress_1, no_stress_2 = (25,38)
+    # relax_1, relax_2 = (45, 50)
+    time_1, time_2 = (5,70)
 
-    # label_ns=subject_label[i][0]
-    # label_s=subject_label[i][2]
-    # label_ls=subject_label[i][1]
+
     
-    df_no_stress=get_no_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID)
-    df_no_stress=df_no_stress.fillna(np.mean(df_no_stress))
-    df_no_stress=df_no_stress.fillna(0)
-    df_stress=get_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID)
-    df_stress=df_stress.fillna(np.mean(df_stress))
-    df_stress=df_stress.fillna(0)
-    df_low_stress=get_low_stress_feature(gsr_filename,ppg_filename,ibi_filename,st_filename,ID)
-    df_low_stress=df_low_stress.fillna(np.mean(df_low_stress))
-    df_low_stress=df_low_stress.fillna(0)
+    df_all=get_all_feature(time_1,time_2,gsr_filename,ppg_filename,ibi_filename,st_filename,ID)
+    dataframe_labels=get_segment(dataframe_labels,sample_rate_label,time_1,time_2)
+    lbl = np.array(dataframe_labels[i])
+    df_all['Labels'] = lbl
+    df_all=df_all.fillna(np.mean(df_all))
+    df_all=df_all.fillna(0)
     
-    df_all = pd.concat([df_no_stress,df_stress,df_low_stress], axis=0, join='outer', ignore_index=False)
+    # df_all = pd.concat([df_no_stress,df_stress,df_low_stress], axis=0, join='outer', ignore_index=False)
     # df_all = pd.concat([df_no_stress,df_stress], axis=0, join='outer', ignore_index=False)
     df_all.to_csv(output_file)
     # print('ST0'+str(i)+ 'done')
