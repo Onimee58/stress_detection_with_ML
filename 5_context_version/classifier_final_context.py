@@ -74,6 +74,13 @@ micro_svm_f1 = []
     
 all_id = [p for p in subject_id]
 
+model_1 = RandomForestClassifier(n_estimators=40,criterion='entropy',max_features=None,
+                                 max_depth=None, random_state=3, n_jobs=-1, warm_start=False, class_weight='balanced_subsample')
+model_2 = KNeighborsClassifier(n_neighbors=18)
+model_3 = LogisticRegression(penalty='l2',C=10,random_state=3, solver='lbfgs',multi_class='auto',max_iter =5000)
+model_4 = svm.SVC(random_state=3,C=10,kernel='poly',gamma='auto')
+    
+
 for i in tqdm(range(0, len(all_id))):
     
     # all_id = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,
@@ -112,13 +119,6 @@ for i in tqdm(range(0, len(all_id))):
     scaler_feature = scaler_feature.fit(values)
     X_train_new=scaler_feature.transform(X_train)
     X_test_new=scaler_feature.transform(X_test)   
-    
-    
-    model_1 = RandomForestClassifier(n_estimators=100,criterion='entropy',max_features=None,
-                                     max_depth=None, random_state=3, n_jobs=-1)
-    model_2 = KNeighborsClassifier(n_neighbors=18)
-    model_3 = LogisticRegression(penalty='l2',C=10,random_state=3, solver='lbfgs',multi_class='auto',max_iter =5000)
-    model_4 = svm.SVC(random_state=3,C=10,kernel='poly',gamma='auto')
     
     
     fit_1=model_1.fit(X_train_new,label_2_train)
